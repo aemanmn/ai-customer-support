@@ -13,12 +13,20 @@ ESCALATED_LABEL = "needs-human"
 
 class Gmail:
     def __init__(self) -> None:
+        client_id = settings.google_client_id
+        client_secret = settings.google_client_secret
+        refresh_token = settings.google_refresh_token
+        if not client_id or not client_secret or not refresh_token:
+            raise RuntimeError(
+                "GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, and GOOGLE_REFRESH_TOKEN "
+                "must be set to use Gmail."
+            )
         creds = Credentials(
             token=None,
-            refresh_token=settings.google_refresh_token,
+            refresh_token=refresh_token,
             token_uri="https://oauth2.googleapis.com/token",
-            client_id=settings.google_client_id,
-            client_secret=settings.google_client_secret,
+            client_id=client_id,
+            client_secret=client_secret,
             scopes=SCOPES,
         )
         self.service = build("gmail", "v1", credentials=creds, cache_discovery=False)

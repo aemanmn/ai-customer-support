@@ -1,0 +1,28 @@
+﻿uv : 2026-11-12 16:49:41,287 INFO poller Polling every 30 seconds
+At line:1 char:1
++ uv run python -m app.poller 2>&1 | Out-File -Encoding utf8 error2.log
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (2026-11-12 16:4...very 30 seconds:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-11-12 16:49:42,757 ERROR poller Failed to process 1a1cf742ca9d7d07
+Traceback (most recent call last):
+  File "E:\AI project\ai-customer-support\app\poller.py", line 17, in poll_once
+    handle_message(gmail, message_id)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "E:\AI project\ai-customer-support\app\pipeline.py", line 12, in handle_message
+    event = db.start_event(message_id)
+  File "E:\AI project\ai-customer-support\app\db.py", line 14, in start_event
+    with connect() as conn:
+         ~~~~~~~^^
+  File "E:\AI project\ai-customer-support\app\db.py", line 9, in connect
+    return psycopg.connect(settings.database_url, autocommit=True, row_factory=dict_row)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\AI project\ai-customer-support\.venv\Lib\site-packages\psycopg\connection.py", line 100, in connect
+    attempts = conninfo_attempts(params)
+  File "E:\AI project\ai-customer-support\.venv\Lib\site-packages\psycopg\_conninfo_attempts.py", line 55, in 
+conninfo_attempts
+    raise last_exc
+psycopg.OperationalError: failed to resolve host 'db.xtvoxcxeabmnhtbcsdhb.supabase.co': [Errno 11001] getaddrinfo 
+failed
+2026-11-12 16:49:42,763 INFO poller Handled 1 new messages
